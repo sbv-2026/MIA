@@ -1,0 +1,149 @@
+{
+  "$defs": {
+    "Recipient": {
+      "additionalProperties": false,
+      "properties": {
+        "address": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Address",
+          "type": "string"
+        },
+        "pronoun": {
+          "enum": [
+            "anh",
+            "chị",
+            "anh/chị"
+          ],
+          "title": "Pronoun",
+          "type": "string"
+        }
+      },
+      "required": [
+        "address",
+        "pronoun"
+      ],
+      "title": "Recipient",
+      "type": "object"
+    },
+    "Todo": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "todoType": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Todotype",
+          "type": "string"
+        },
+        "loanAccount": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Loanaccount"
+        },
+        "business": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Business"
+        },
+        "dueDate": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duedate"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Amount"
+        }
+      },
+      "required": [
+        "id",
+        "todoType"
+      ],
+      "title": "Todo",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "sessionId": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Sessionid",
+      "type": "string"
+    },
+    "recipient": {
+      "$ref": "#/$defs/Recipient"
+    },
+    "todoList": {
+      "items": {
+        "$ref": "#/$defs/Todo"
+      },
+      "maxItems": 1000,
+      "title": "Todolist",
+      "type": "array"
+    },
+    "offeringIds": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 100,
+      "title": "Offeringids",
+      "type": "array"
+    },
+    "capturedAt": {
+      "format": "date-time",
+      "title": "Capturedat",
+      "type": "string"
+    }
+  },
+  "required": [
+    "sessionId",
+    "recipient",
+    "todoList",
+    "offeringIds",
+    "capturedAt"
+  ],
+  "title": "AssistantData",
+  "type": "object"
+}

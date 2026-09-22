@@ -1,0 +1,17 @@
+services:
+  demo-msb-web:
+    build: .
+    image: ghcr.io/miahackathon/demo-msb-web:0.1.0
+    ports: ["${DEMO_MBB_PORT:-8081}:8000"]
+    environment:
+      ASSISTANT_URL: "${ASSISTANT_URL:-http://localhost:8090/assistant/}"
+      MIA_SUPPORT_ASSISTANT_API_URL: "${MIA_SUPPORT_ASSISTANT_API_URL:-http://host.docker.internal:8090}"
+      MIA_SCENARIOS_ENABLED: "${MIA_SCENARIOS_ENABLED:-true}"
+      CONFIG_GURANTEE_ERROR: "${CONFIG_GURANTEE_ERROR:-}"
+      CONFIG_GUARANTEE_ERROR: "${CONFIG_GUARANTEE_ERROR:-}"
+    volumes: ["./config:/app/config:ro"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3

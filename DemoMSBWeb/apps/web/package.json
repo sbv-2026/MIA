@@ -1,0 +1,29 @@
+{
+  "name": "@demo-msb-web/web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json && vite build",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@mia/contracts": "file:vendor/mia-contracts-0.2.0.tgz",
+    "@mia/web-context-adapter": "file:vendor/mia-web-context-adapter-0.2.2.tgz",
+    "lucide-react": "^0.468.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.1.1",
+    "jsdom": "30.0.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.0",
+    "vitest": "5.0.0"
+  }
+}

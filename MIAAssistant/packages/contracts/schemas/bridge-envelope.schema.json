@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mia.demo/contracts/bridge-envelope.schema.json",
+  "title": "BridgeEnvelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractVersion", "requestId", "type", "timestamp", "payload"],
+  "properties": {
+    "contractVersion": { "const": "1.0" },
+    "requestId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "type": {
+      "enum": [
+        "assistant.ready",
+        "host.context.changed",
+        "host.context.snapshot",
+        "assistant.context.requested",
+        "assistant.navigation.requested",
+        "host.navigation.completed",
+        "assistant.panel.changed",
+        "host.error.changed"
+      ]
+    },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "payload": { "type": "object" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "type": { "const": "assistant.ready" } } },
+      "then": { "properties": { "payload": { "$ref": "#/$defs/assistantReady" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "host.context.changed" } } },
+      "then": { "properties": { "payload": { "$ref": "screen-context.schema.json" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "host.context.snapshot" } } },
+      "then": { "properties": { "payload": { "$ref": "context-snapshot.schema.json" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "assistant.context.requested" } } },
+      "then": { "properties": { "payload": { "$ref": "#/$defs/contextRequested" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "assistant.navigation.requested" } } },
+      "then": { "properties": { "payload": { "$ref": "#/$defs/navigationRequested" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "host.navigation.completed" } } },
+      "then": { "properties": { "payload": { "$ref": "#/$defs/navigationCompleted" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "assistant.panel.changed" } } },
+      "then": { "properties": { "payload": { "$ref": "#/$defs/panelChanged" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "host.error.changed" } } },
+      "then": { "properties": { "payload": { "$ref": "#/$defs/errorChanged" } } }
+    }
+  ],
+  "$defs": {
+    "routeId": { "enum": ["home", "transfer", "qr-payment", "disbursement"] },
+    "assistantReady": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assistantInstanceId", "supportedContractVersions"],
+      "properties": {
+        "assistantInstanceId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "supportedContractVersions": {
+          "type": "array",
+          "minItems": 1,
+          "contains": { "const": "1.0" },
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "contextRequested": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sessionId", "reason"],
+      "properties": {
+        "sessionId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "reason": { "enum": ["assistant-panel-opened", "context-missing", "context-stale"] }
+      }
+    },
+    "navigationRequested": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["routeId"],
+      "properties": { "routeId": { "$ref": "#/$defs/routeId" } }
+    },
+    "navigationCompleted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["routeId", "screenId", "status"],
+      "properties": {
+        "routeId": { "$ref": "#/$defs/routeId" },
+        "screenId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "status": { "enum": ["success", "rejected"] },
+        "reason": { "type": ["string", "null"], "maxLength": 256 }
+      }
+    },
+    "panelChanged": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state"],
+      "properties": { "state": { "enum": ["open", "closed"] } }
+    },
+    "errorChanged": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sessionId", "screenId", "lastErrorId", "hasError"],
+      "properties": {
+        "sessionId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "screenId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "lastErrorId": { "type": ["string", "null"], "maxLength": 128 },
+        "hasError": { "type": "boolean" }
+      }
+    }
+  }
+}

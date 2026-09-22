@@ -1,0 +1,147 @@
+version: "2.0"
+operation: disbursement.domestic.submit
+currency: VND
+
+# Kịch bản MIA hỗ trợ chuẩn bị giao dịch phát hành thư tín dụng.
+lcIssuance:
+  screenId: letter-of-credit-issue
+  operation: letter-of-credit.issue.edit
+  lcTypes: [LC thường, LC UPAS, LC khác]
+  issueModes: [LC nháp, LC chính thức]
+  maxPurchaseOrderBytes: 10000000
+  informationStep: 1
+  missingFieldStyle: error
+  extractedFields:
+    - currency
+    - amount
+    - applicantName
+    - applicantAddress
+    - applicantCountry
+    - beneficiaryName
+    - beneficiaryAddress
+    - beneficiaryCountry
+    - swift
+    - bankName
+    - expiryDate
+    - expiryPlace
+    - incoterms
+    - goodsDescription
+
+# Danh sách trắng tài khoản thụ hưởng dùng cho demo. Mọi số tài khoản không
+# nằm trong danh sách này sẽ trả về lỗi 11001 (không tìm thấy tài khoản).
+beneficiaries:
+  "001100123456":
+    beneficiaryName: CÔNG TY TNHH THƯƠNG MẠI MINH AN
+  "999000000001":
+    beneficiaryName: CÔNG TY CỔ PHẦN THƯƠNG MẠI AN PHÁT
+  "999000000002":
+    beneficiaryName: CÔNG TY TNHH DỊCH VỤ HẢI ĐĂNG
+
+# File này được đọc lại ở mỗi lần rời trường hoặc bấm "Tiếp tục".
+# priority càng lớn thì lỗi càng được ưu tiên khi có nhiều rule cùng khớp.
+# matcher hỗ trợ: equals, contains, containsAny, minInclusive, maxExclusive.
+inlineErrors:
+  accountNumber:
+    - id: account-required
+      field: accountNumber
+      value: ""
+      matcher: equals
+      errorCode: "11000"
+      message: Vui lòng nhập số tài khoản.
+      priority: 100
+    - id: account-locked
+      field: accountNumber
+      value: "999000000002"
+      matcher: equals
+      errorCode: "11002"
+      message: Tài khoản thụ hưởng đang tạm khóa.
+      priority: 80
+  amount:
+    - id: amount-required
+      field: amount
+      value: ""
+      matcher: equals
+      errorCode: "12000"
+      message: Vui lòng nhập số tiền thụ hưởng.
+      priority: 100
+    - id: amount-limit-exceeded
+      field: amount
+      value: "500000000"
+      matcher: minInclusive
+      errorCode: "12001"
+      message: Số tiền vượt hạn mức giải ngân còn lại trong ngày.
+      priority: 90
+  content:
+    - id: content-required
+      field: content
+      value: ""
+      matcher: equals
+      errorCode: "13000"
+      message: Vui lòng nhập nội dung chuyển tiền.
+      priority: 100
+    - id: invalid-transfer-content
+      field: content
+      value: "@#$%!"
+      matcher: containsAny
+      errorCode: "13001"
+      message: Nội dung chuyển tiền không được chứa các ký tự @ # $ % !.
+      priority: 90
+
+popupErrors:
+  continue:
+    - id: account-fast-transfer-unsupported
+      errorCode: "21001"
+      title: Tài khoản không hỗ trợ chuyển nhanh 24/7
+      message: Quý khách vui lòng kiểm tra và chọn lại tài khoản khác
+      priority: 100
+      match: { accountNumber: "999000000001" }
+    - id: account-locked-popup
+      errorCode: "21002"
+      title: Tài khoản thụ hưởng đang tạm khóa
+      message: Quý khách vui lòng kiểm tra và chọn lại tài khoản khác
+      priority: 90
+      match: { accountNumber: "999000000002" }
+    - id: content-invalid-popup
+      errorCode: "23001"
+      title: Nội dung chuyển tiền không hợp lệ
+      message: Quý khách vui lòng kiểm tra lại nội dung chuyển tiền
+      priority: 80
+      match: { contentContainsAny: "@#$%!" }
+    - id: amount-limit-popup
+      errorCode: "22001"
+      title: Số tiền vượt hạn mức giải ngân
+      message: Quý khách vui lòng kiểm tra lại số tiền thụ hưởng
+      priority: 70
+      match: { minAmountInclusive: "500000000" }
+    - id: account-required-popup
+      errorCode: "21000"
+      title: Chưa nhập số tài khoản
+      message: Quý khách vui lòng nhập số tài khoản thụ hưởng
+      priority: 60
+      match: { accountNumber: "" }
+    - id: amount-required-popup
+      errorCode: "22000"
+      title: Chưa nhập số tiền thụ hưởng
+      message: Quý khách vui lòng nhập số tiền thụ hưởng
+      priority: 50
+      match: { amountEquals: "0" }
+    - id: content-required-popup
+      errorCode: "23000"
+      title: Chưa nhập nội dung chuyển tiền
+      message: Quý khách vui lòng nhập nội dung chuyển tiền
+      priority: 40
+      match: { content: "" }
+
+successRules:
+  - id: msb-demo-beneficiary
+    priority: 10
+    match: { accountNumber: "001100123456" }
+    beneficiaryName: CÔNG TY TNHH THƯƠNG MẠI MINH AN
+  - id: fast-transfer-beneficiary
+    priority: 9
+    match: { accountNumber: "999000000001" }
+    beneficiaryName: CÔNG TY CỔ PHẦN THƯƠNG MẠI AN PHÁT
+  - id: locked-beneficiary
+    priority: 8
+    match: { accountNumber: "999000000002" }
+    beneficiaryName: CÔNG TY TNHH DỊCH VỤ HẢI ĐĂNG

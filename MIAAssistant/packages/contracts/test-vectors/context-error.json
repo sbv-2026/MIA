@@ -1,0 +1,13 @@
+{
+  "context": {
+    "schemaVersion": "1.0", "sessionId": "contract-session", "screenId": "domestic-disbursement-create",
+    "routeId": "disbursement", "screenState": "error", "lastOperation": "disbursement.domestic.submit",
+    "lastErrorId": "inline-account-not-found", "errorCode": "11001", "locale": "vi-VN",
+    "capturedAt": "2026-09-14T00:00:00Z", "source": "host-api"
+  },
+  "error": {
+    "errorId": "inline-account-not-found", "errorCode": "11001", "operation": "disbursement.domestic.submit",
+    "screenId": "domestic-disbursement-create", "field": "accountNumber", "kind": "inline",
+    "occurredAt": "2026-09-14T00:00:00Z", "observedAt": "2026-09-14T00:00:01Z", "source": "host-provider"
+  }
+}

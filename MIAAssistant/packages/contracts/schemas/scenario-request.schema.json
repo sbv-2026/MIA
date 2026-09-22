@@ -1,0 +1,487 @@
+{
+  "$defs": {
+    "AssistantData": {
+      "additionalProperties": false,
+      "properties": {
+        "sessionId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Sessionid",
+          "type": "string"
+        },
+        "recipient": {
+          "$ref": "#/$defs/Recipient"
+        },
+        "todoList": {
+          "items": {
+            "$ref": "#/$defs/Todo"
+          },
+          "maxItems": 1000,
+          "title": "Todolist",
+          "type": "array"
+        },
+        "offeringIds": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Offeringids",
+          "type": "array"
+        },
+        "capturedAt": {
+          "format": "date-time",
+          "title": "Capturedat",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sessionId",
+        "recipient",
+        "todoList",
+        "offeringIds",
+        "capturedAt"
+      ],
+      "title": "AssistantData",
+      "type": "object"
+    },
+    "ContextSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/ScreenContext"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CurrentErrorSnapshot"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "context"
+      ],
+      "title": "ContextSnapshot",
+      "type": "object"
+    },
+    "ContextSource": {
+      "enum": [
+        "host-api",
+        "dom-extractor"
+      ],
+      "title": "ContextSource",
+      "type": "string"
+    },
+    "CurrentErrorSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "errorId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Errorid",
+          "type": "string"
+        },
+        "errorCode": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Errorcode",
+          "type": "string"
+        },
+        "operation": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Operation",
+          "type": "string"
+        },
+        "screenId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Screenid",
+          "type": "string"
+        },
+        "field": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field"
+        },
+        "kind": {
+          "$ref": "#/$defs/ErrorKind"
+        },
+        "occurredAt": {
+          "format": "date-time",
+          "title": "Occurredat",
+          "type": "string"
+        },
+        "observedAt": {
+          "format": "date-time",
+          "title": "Observedat",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/ErrorSnapshotSource"
+        }
+      },
+      "required": [
+        "errorId",
+        "errorCode",
+        "operation",
+        "screenId",
+        "kind",
+        "occurredAt",
+        "observedAt",
+        "source"
+      ],
+      "title": "CurrentErrorSnapshot",
+      "type": "object"
+    },
+    "ErrorKind": {
+      "enum": [
+        "inline",
+        "popup",
+        "page",
+        "toast"
+      ],
+      "title": "ErrorKind",
+      "type": "string"
+    },
+    "ErrorSnapshotSource": {
+      "enum": [
+        "host-provider",
+        "network-interceptor",
+        "dom-extractor"
+      ],
+      "title": "ErrorSnapshotSource",
+      "type": "string"
+    },
+    "Feature": {
+      "additionalProperties": false,
+      "properties": {
+        "routeId": {
+          "enum": [
+            "home",
+            "transfer",
+            "qr-payment",
+            "disbursement"
+          ],
+          "title": "Routeid",
+          "type": "string"
+        },
+        "screenId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Screenid",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "aliases": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Aliases",
+          "type": "array"
+        },
+        "categoryPath": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        }
+      },
+      "required": [
+        "routeId",
+        "screenId",
+        "name"
+      ],
+      "title": "Feature",
+      "type": "object"
+    },
+    "Recipient": {
+      "additionalProperties": false,
+      "properties": {
+        "address": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Address",
+          "type": "string"
+        },
+        "pronoun": {
+          "enum": [
+            "anh",
+            "chị",
+            "anh/chị"
+          ],
+          "title": "Pronoun",
+          "type": "string"
+        }
+      },
+      "required": [
+        "address",
+        "pronoun"
+      ],
+      "title": "Recipient",
+      "type": "object"
+    },
+    "RouteId": {
+      "enum": [
+        "home",
+        "transfer",
+        "qr-payment",
+        "disbursement"
+      ],
+      "title": "RouteId",
+      "type": "string"
+    },
+    "ScreenContext": {
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0",
+          "title": "Schemaversion",
+          "type": "string"
+        },
+        "sessionId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Sessionid",
+          "type": "string"
+        },
+        "screenId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Screenid",
+          "type": "string"
+        },
+        "routeId": {
+          "$ref": "#/$defs/RouteId"
+        },
+        "screenState": {
+          "$ref": "#/$defs/ScreenState"
+        },
+        "lastOperation": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lastoperation"
+        },
+        "lastErrorId": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lasterrorid"
+        },
+        "errorCode": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Errorcode"
+        },
+        "locale": {
+          "const": "vi-VN",
+          "default": "vi-VN",
+          "title": "Locale",
+          "type": "string"
+        },
+        "capturedAt": {
+          "format": "date-time",
+          "title": "Capturedat",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/ContextSource"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "sessionId",
+        "screenId",
+        "routeId",
+        "screenState",
+        "capturedAt",
+        "source"
+      ],
+      "title": "ScreenContext",
+      "type": "object"
+    },
+    "ScreenState": {
+      "enum": [
+        "idle",
+        "editing",
+        "submitting",
+        "success",
+        "error"
+      ],
+      "title": "ScreenState",
+      "type": "string"
+    },
+    "Todo": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "todoType": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Todotype",
+          "type": "string"
+        },
+        "loanAccount": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Loanaccount"
+        },
+        "business": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Business"
+        },
+        "dueDate": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duedate"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Amount"
+        }
+      },
+      "required": [
+        "id",
+        "todoType"
+      ],
+      "title": "Todo",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "sessionId": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Sessionid",
+      "type": "string"
+    },
+    "contextSnapshot": {
+      "$ref": "#/$defs/ContextSnapshot"
+    },
+    "assistantData": {
+      "$ref": "#/$defs/AssistantData"
+    },
+    "features": {
+      "items": {
+        "$ref": "#/$defs/Feature"
+      },
+      "maxItems": 100,
+      "title": "Features",
+      "type": "array"
+    },
+    "actionId": {
+      "anyOf": [
+        {
+          "maxLength": 256,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Actionid"
+    },
+    "message": {
+      "default": "",
+      "maxLength": 1000,
+      "title": "Message",
+      "type": "string"
+    }
+  },
+  "required": [
+    "sessionId",
+    "contextSnapshot",
+    "assistantData",
+    "features"
+  ],
+  "title": "ScenarioRequest",
+  "type": "object"
+}

@@ -1,0 +1,10 @@
+services:
+  demo-msb-web:
+    image: ghcr.io/miahackathon/demo-msb-web:0.1.0
+    ports: ["8081:8000"]
+    environment: { ASSISTANT_ORIGIN: "http://localhost:8090" }
+  mia-assistant:
+    image: ghcr.io/miahackathon/mia-assistant:0.1.0
+    ports: ["8090:8000"]
+    environment:
+      MIA_DEMO_HOST_API_URL: "http://demo-msb-web:8000"

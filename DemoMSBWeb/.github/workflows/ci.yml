@@ -1,0 +1,20 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: apps/web/package-lock.json }
+      - run: npm ci
+        working-directory: apps/web
+      - run: npm run build
+        working-directory: apps/web
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+      - run: pip install -e './services/demo-banking-api[test]'
+      - run: pytest services/demo-banking-api/tests
+      - run: docker build -t demo-msb-web:${{ github.sha }} .
+      - uses: aquasecurity/trivy-action@0.33.1
+        with: { image-ref: "demo-msb-web:${{ github.sha }}", severity: "CRITICAL,HIGH", exit-code: "1" }

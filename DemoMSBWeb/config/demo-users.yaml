@@ -1,0 +1,162 @@
+version: "1.0"
+users:
+  - username: sobv
+    name: Sô
+    Full name: Bùi Viết Sô
+    user_email: "sobv@msb.com.vn"
+    phoneNumber: "0983123456"
+    CIF_Number: "595708"
+    Corp_name: "Cong ty TNHH MTV TM DV SAMSMART"
+    gender: Nam
+  - username: ly
+    name: Ly
+    Full name: Dương Hương Ly
+    user_email: "lydh2@msb.com.vn"
+    phoneNumber: "0983123456"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 1"
+    gender: Nữ
+  - username: tanh
+    name: Tú Anh
+    Full name: Đô Thị Tú Anh
+    user_email: "anhdtt1@msb.com.vn"
+    phoneNumber: "0983123456"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 3"
+    gender: Nữ
+  - username: hoa
+    name: Hòa
+    Full name: Hòa
+    user_email: "hoalt14@msb.com.vn"
+    phoneNumber: "0983123456"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 4"
+    gender: Nữ
+  - username: thu
+    name: Thư
+    Full name: Thư
+    user_email: "thunt40@"
+    phoneNumber: "0983123456"
+    CIF_Number: ""
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 5"
+    gender: Nữ
+  - username: khoi
+    name: Tuấn Khôi
+    Full name: Bùi Tuấn Khôi
+    user_email: ""
+    phoneNumber: "0983123456"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 6"
+    gender: Nam
+  - username: khanh
+    name: Khánh
+    Full name: Nguyễn Quóc Khánh
+    user_email: "vips8157@gmail.com" 
+    phoneNumber: "123456789"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 8"
+    gender: Nam
+  - username: kha
+    name: Kha
+    Full name: Nguyễn Hoàng Kha
+    user_email: "vips8157@gmail.com" 
+    phoneNumber: "123456789"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 9"
+    gender: Nam
+  - username: thanh
+    name: Thanh
+    Full name: Nguyễn Hà Thanh
+    user_email: "vips8157@gmail.com" 
+    phoneNumber: "123456789"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 10"
+    gender: Nữ
+  - username: thuy
+    name: Thúy
+    Full name: Lê Cẩm Thúy
+    user_email: "vips8157@gmail.com" 
+    phoneNumber: "123456789"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 12"
+    gender: Nữ
+  - username: linhnm
+    name: Linh
+    Full name: Nguyễn Mạnh Linh
+    user_email: "vips8157@gmail.com" 
+    phoneNumber: "123456789"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 12"
+    gender: Nam
+  - username: cuong
+    name: Cương
+    Full name: Nguyễn Ngọc Cương
+    user_email: "vips8157@gmail.com" 
+    phoneNumber: "123456789"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 12"
+    gender: Nam
+  - username: tung
+    name: Tùng
+    Full name: Vũ Thanh Tùng
+    user_email: "vips8157@gmail.com" 
+    phoneNumber: "123456789"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 12"
+    gender: Nam
+  - username: lai
+    name: Lai
+    Full name: Vũ Ngọc Bồng Lai
+    user_email: "vips8157@gmail.com" 
+    phoneNumber: "123456789"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 12"
+    gender: Nam
+  - username: hien
+    name: Hiển
+    Full name: Nguyễn Thanh Hiển
+    user_email: "vips8157@gmail.com" 
+    phoneNumber: "123456789"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 12"
+    gender: Nữ
+  - username: ha
+    name: Hà
+    Full name: Phạm Thu Hà
+    user_email: "vips8157@gmail.com" 
+    phoneNumber: "123456789"
+    CIF_Number: "123456"
+    Corp_name: "Cong ty TNHH MTV TM DV TEST 12"
+    gender: Nữ
+  - username: erik
+    name: Tú
+    Full name: Bùi Viết Sô
+    user_email: "sobv@msb.com.vn"
+    phoneNumber: "0983123456"
+    CIF_Number: "595708"
+    Corp_name: "Cong ty TNHH MTV TM DV SAMSMART"
+    gender: Nam
+  - username: huy
+    name: Huy 
+    Full name: Trần Mai Huy
+    user_email: "huymt3@msb.com.vn"
+    phoneNumber: "0983123456"
+    CIF_Number: "595708"
+    Corp_name: "Cong ty TNHH MTV TM DV SAMSMART"
+    gender: Nam
+  - username: huong
+    name: Hương
+    Full name: Đặng Minh Hương
+    user_email: "huongdm3@msb.com.vn"
+    phoneNumber: "0983123456"
+    CIF_Number: "595708"
+    Corp_name: "Cong ty TNHH MTV TM DV SAMSMART"
+    gender: Nữ
+  - username: chi
+    name: Chi
+    Full name: Nguyễn Kim Chi
+    user_email: "chink11@msb.com.vn"
+    phoneNumber: "0983123456"
+    CIF_Number: "595708"
+    Corp_name: "Cong ty TNHH MTV TM DV SAMSMART"
+    gender: Nữ

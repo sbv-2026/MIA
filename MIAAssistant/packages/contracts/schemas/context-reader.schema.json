@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mia.demo/contracts/context-reader.schema.json",
+  "title": "ContextReaderConfig",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "mode", "refreshOn", "hostApi", "domExtractor", "redaction"],
+  "properties": {
+    "version": { "const": "1.0" },
+    "mode": { "enum": ["host-api", "dom-extractor"] },
+    "refreshOn": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["assistant-panel-opened", "route-changed", "transaction-completed"] }
+    },
+    "hostApi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contextEndpoint", "errorEndpoint"],
+      "properties": {
+        "contextEndpoint": { "type": "string", "pattern": "^/(?!/)(?!.*://).+$" },
+        "errorEndpoint": { "type": "string", "pattern": "^/(?!/)(?!.*://).+$" }
+      }
+    },
+    "domExtractor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sameOriginRequired", "screens"],
+      "properties": {
+        "sameOriginRequired": { "const": true },
+        "screens": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["routeId", "fields"],
+            "properties": {
+              "routeId": { "enum": ["home", "transfer", "qr-payment", "disbursement"] },
+              "fields": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["selector", "source"],
+                  "properties": {
+                    "selector": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "pattern": "^\\[data-agent-field=\\\"[^\\\"]+\\\"\\]$"
+                    },
+                    "source": { "type": "string", "pattern": "^(textContent|data-[a-zA-Z0-9-]+)$" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "redaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deniedFields"],
+      "properties": {
+        "deniedFields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 128 }
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,28 @@
+{
+  "name": "@mia/assistant-react-native",
+  "version": "0.2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@mia/contracts": "0.2.0"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2"
+  },
+  "peerDependencies": {
+    "react": ">=19",
+    "react-native": ">=0.83",
+    "react-native-webview": ">=13"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}

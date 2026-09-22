@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mia.local/contracts/context-snapshot.schema.json",
+  "title": "ContextSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["context", "error"],
+  "properties": {
+    "context": { "$ref": "./screen-context.schema.json" },
+    "error": {
+      "oneOf": [
+        { "$ref": "./current-error-snapshot.schema.json" },
+        { "type": "null" }
+      ]
+    }
+  }
+}

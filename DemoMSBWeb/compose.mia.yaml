@@ -1,0 +1,8 @@
+# Run from DemoMSBWeb:
+# docker compose -f ../MIAAssistant/compose.yaml -f compose.mia.yaml up -d --build
+services:
+  assistant:
+    environment:
+      MIA_SCENARIO_CONFIG: /app/config/demo-mia-scenarios.yaml
+    volumes:
+      - ./../DemoMSBWeb/config/mia-scenarios.yaml:/app/config/demo-mia-scenarios.yaml:ro

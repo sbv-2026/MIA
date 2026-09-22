@@ -1,0 +1,224 @@
+datasetVersion: "demo-2026.09.2"
+status: published
+source:
+  sourceId: src-disbursement-guide-demo
+  fileName: huong-dan-xu-ly-loi-giai-ngan-demo.md
+  documentVersion: "1.0"
+suggestions:
+  simplify: { id: simplify, label: Giải thích đơn giản hơn, action: simplify }
+  expand: { id: expand, label: Nói kỹ hơn, action: expand }
+  clarify: { id: clarify, label: Làm rõ thêm, action: clarify }
+  repeat: { id: repeat, label: Nhắc lại, action: repeat }
+suggestionFlow:
+  explain: [simplify, expand, repeat]
+  simplify: [expand, clarify, repeat]
+  expand: [clarify, simplify, repeat]
+  clarify: [simplify, repeat]
+modelEscalation:
+  action: clarify
+  maxOutputTokens: 300
+  systemPrompt: >-
+    Bạn là MIA, chuyên viên hỗ trợ nghiệp vụ giải ngân. Dựa trên mô tả lỗi,
+    các bước đã thực hiện và hội thoại để suy luận hướng dẫn tiếp theo, trả lời
+    trực tiếp câu hỏi mới, không chỉ lặp lại hướng dẫn gốc. Không bịa nguyên nhân,
+    chính sách hoặc kết quả giao dịch; không yêu cầu dữ liệu nhạy cảm. Dùng danh
+    xưng và tên được cung cấp, không dùng quý khách, không hỏi khó khăn ở bước nào.
+    Trả lời đúng định dạng: dòng đầu "Vấn đề: <giải thích>", dòng tiếp theo
+    "Cách xử lý:", rồi từng bước trên một dòng theo mẫu "1. <nội dung>".
+
+definitions:
+  - errorCode: "11000"
+    operation: disbursement.domestic.submit
+    title: Chưa nhập số tài khoản thụ hưởng
+    description: Trường số tài khoản thụ hưởng đang để trống.
+    severity: recoverable
+    clarificationFields: []
+    escalation: { required: false, channel: null }
+    chunkId: guide-account-required-inline
+    section: Kiểm tra tài khoản thụ hưởng
+    steps:
+      - Nhập đầy đủ số tài khoản của bên thụ hưởng.
+      - Kiểm tra lại dãy số trước khi tiếp tục.
+  - errorCode: "11001"
+    operation: disbursement.domestic.submit
+    title: Không tìm thấy tài khoản thụ hưởng
+    description: Số tài khoản đang nhập không xác định được bên thụ hưởng tại MSB.
+    severity: recoverable
+    clarificationFields: []
+    escalation: { required: false, channel: null }
+    chunkId: guide-account-not-found-inline
+    section: Kiểm tra tài khoản thụ hưởng
+    steps:
+      - Đối chiếu lại toàn bộ số tài khoản với thông tin bên thụ hưởng.
+      - Nhập lại số tài khoản chính xác hoặc chọn tài khoản khác.
+  - errorCode: "11002"
+    operation: disbursement.domestic.submit
+    title: Tài khoản thụ hưởng đang tạm khóa
+    description: Tài khoản thụ hưởng đang ở trạng thái tạm khóa.
+    severity: blocking
+    clarificationFields: []
+    escalation: { required: true, channel: hotline-demo }
+    chunkId: guide-account-locked-inline
+    section: Trạng thái tài khoản thụ hưởng
+    steps:
+      - Kiểm tra lại số tài khoản và tên bên thụ hưởng.
+      - Liên hệ bên thụ hưởng để xác nhận trạng thái hoặc chọn tài khoản khác.
+  - errorCode: "12000"
+    operation: disbursement.domestic.submit
+    title: Chưa nhập số tiền thụ hưởng
+    description: Trường số tiền chuyển đi đang để trống.
+    severity: recoverable
+    clarificationFields: []
+    escalation: { required: false, channel: null }
+    chunkId: guide-amount-required-inline
+    section: Nhập số tiền giải ngân
+    steps:
+      - Nhập số tiền chuyển đi bằng VND.
+      - Kiểm tra lại số tiền trước khi tiếp tục.
+  - errorCode: "12001"
+    operation: disbursement.domestic.submit
+    title: Số tiền vượt hạn mức giải ngân
+    description: Số tiền đang nhập lớn hơn hạn mức giải ngân còn được sử dụng trong ngày.
+    severity: recoverable
+    clarificationFields: [remainingLimitChecked]
+    escalation: { required: false, channel: null }
+    chunkId: guide-daily-limit-inline
+    section: Kiểm tra hạn mức giải ngân
+    steps:
+      - Đối chiếu số tiền với hạn mức còn được sử dụng trên màn hình Giải ngân.
+      - Điều chỉnh số tiền không vượt hạn mức còn lại.
+  - errorCode: "13000"
+    operation: disbursement.domestic.submit
+    title: Chưa nhập nội dung chuyển tiền
+    description: Trường nội dung chuyển tiền đang để trống.
+    severity: recoverable
+    clarificationFields: []
+    escalation: { required: false, channel: null }
+    chunkId: guide-content-required-inline
+    section: Nội dung chuyển tiền
+    steps:
+      - Nhập nội dung mô tả mục đích chuyển tiền.
+      - Kiểm tra lại nội dung trước khi tiếp tục.
+  - errorCode: "13001"
+    operation: disbursement.domestic.submit
+    title: Nội dung chuyển tiền không hợp lệ
+    description: Nội dung đang nhập có ký tự không được hỗ trợ.
+    severity: recoverable
+    clarificationFields: []
+    escalation: { required: false, channel: null }
+    chunkId: guide-content-invalid-inline
+    section: Ký tự được chấp nhận
+    steps:
+      - Xóa các ký tự @, #, $, % hoặc ! khỏi nội dung chuyển tiền.
+      - Nhập lại nội dung bằng chữ và số.
+  - errorCode: "21000"
+    operation: disbursement.domestic.submit
+    title: Chưa nhập số tài khoản thụ hưởng
+    description: Yêu cầu chưa có số tài khoản để xác định bên thụ hưởng.
+    severity: recoverable
+    clarificationFields: []
+    escalation: { required: false, channel: null }
+    chunkId: guide-account-required
+    section: Kiểm tra tài khoản thụ hưởng
+    steps:
+      - Nhập đầy đủ số tài khoản của bên thụ hưởng.
+      - Kiểm tra lại dãy số trước khi chọn Tiếp tục.
+  - errorCode: "21001"
+    operation: disbursement.domestic.submit
+    title: Tài khoản không hỗ trợ chuyển nhanh 24/7
+    description: Tài khoản thụ hưởng hiện không đáp ứng phương thức chuyển nhanh 24/7 trong yêu cầu này.
+    severity: recoverable
+    clarificationFields: [transferTypeChecked]
+    escalation: { required: false, channel: null }
+    chunkId: guide-account-fast-transfer
+    section: Lựa chọn phương thức chuyển
+    steps:
+      - Kiểm tra lại số tài khoản và ngân hàng thụ hưởng đang hiển thị.
+      - Chọn chuyển thường nếu giao dịch không bắt buộc dùng chuyển nhanh 24/7, sau đó thử lại.
+  - errorCode: "21002"
+    operation: disbursement.domestic.submit
+    title: Tài khoản thụ hưởng đang tạm khóa
+    description: Ngân hàng thụ hưởng đang báo tài khoản ở trạng thái tạm khóa.
+    severity: blocking
+    clarificationFields: []
+    escalation: { required: true, channel: hotline-demo }
+    chunkId: guide-account-locked
+    section: Trạng thái tài khoản thụ hưởng
+    steps:
+      - Kiểm tra lại số tài khoản và tên bên thụ hưởng.
+      - Liên hệ bên thụ hưởng để xác nhận trạng thái tài khoản hoặc chọn tài khoản khác.
+  - errorCode: "22000"
+    operation: disbursement.domestic.submit
+    title: Chưa nhập số tiền thụ hưởng
+    description: Yêu cầu chưa có số tiền giải ngân cho bên thụ hưởng.
+    severity: recoverable
+    clarificationFields: []
+    escalation: { required: false, channel: null }
+    chunkId: guide-amount-required
+    section: Nhập số tiền giải ngân
+    steps:
+      - Nhập số tiền chuyển đi bằng VND.
+      - Kiểm tra lại số tiền trước khi chọn Tiếp tục.
+  - errorCode: "22001"
+    operation: disbursement.domestic.submit
+    title: Số tiền vượt hạn mức giải ngân
+    description: Số tiền yêu cầu lớn hơn hạn mức giải ngân còn được sử dụng trong ngày.
+    severity: recoverable
+    clarificationFields: [remainingLimitChecked]
+    escalation: { required: false, channel: null }
+    chunkId: guide-daily-limit
+    section: Kiểm tra hạn mức giải ngân
+    steps:
+      - Đối chiếu số tiền chuyển với hạn mức còn được sử dụng trên màn hình Giải ngân.
+      - Điều chỉnh số tiền không vượt hạn mức còn lại rồi gửi lại yêu cầu.
+  - errorCode: "23000"
+    operation: disbursement.domestic.submit
+    title: Chưa nhập nội dung chuyển tiền
+    description: Nội dung chuyển tiền là thông tin bắt buộc của yêu cầu.
+    severity: recoverable
+    clarificationFields: []
+    escalation: { required: false, channel: null }
+    chunkId: guide-content-required
+    section: Nội dung chuyển tiền
+    steps:
+      - Nhập nội dung mô tả mục đích chuyển tiền.
+      - Kiểm tra lại nội dung trước khi chọn Tiếp tục.
+  - errorCode: "23001"
+    operation: disbursement.domestic.submit
+    title: Nội dung chuyển tiền không hợp lệ
+    description: Nội dung chuyển tiền có ký tự không được hỗ trợ.
+    severity: recoverable
+    clarificationFields: []
+    escalation: { required: false, channel: null }
+    chunkId: guide-content-invalid
+    section: Ký tự được chấp nhận
+    steps:
+      - Xóa các ký tự @, #, $, % hoặc ! khỏi nội dung chuyển tiền.
+      - Nhập lại nội dung bằng chữ và số rồi chọn Tiếp tục.
+  - errorCode: "50001"
+    operation: guarantee.create
+    title: Không đủ vai trò thực hiện Bảo lãnh
+    description: Quý khách không thể tạo lệnh do không phải là Kế toán trưởng hoặc Kế toán trưởng ủy quyền. Vui lòng kiểm tra lại.
+    severity: blocking
+    clarificationFields: []
+    escalation: { required: true, channel: msb-support }
+    chunkId: guide-guarantee-chief-accountant-role
+    section: Vai trò Kế toán trưởng khi tạo Bảo lãnh
+    steps:
+      - Liên hệ cán bộ hỗ trợ tại MSB để cung cấp thông tin về vai trò Kế toán trưởng hoặc Kế toán trưởng ủy quyền.
+      - Cung cấp văn bản có Quyết định bổ nhiệm Kế toán trưởng hoặc văn bản ủy quyền của Kế toán trưởng.
+      - Yêu cầu cán bộ MSB cập nhật quan hệ Kế toán trưởng hoặc Kế toán trưởng ủy quyền của doanh nghiệp trên hệ thống, sau đó đăng nhập lại và thử tạo lệnh.
+  - errorCode: "50002"
+    operation: guarantee.create
+    title: Chưa xác định Người đại diện vay vốn
+    description: Dịch vụ tín dụng yêu cầu người dùng cuối phải là Người đại diện vay vốn. Vui lòng kiểm tra lại.
+    severity: blocking
+    clarificationFields: []
+    escalation: { required: true, channel: msb-support }
+    chunkId: guide-guarantee-borrower-representative-role
+    section: Người đại diện vay vốn trong quy trình Bảo lãnh
+    steps:
+      - Kiểm tra quy trình duyệt của sản phẩm Bảo lãnh đã có người duyệt lệnh là Người đại diện vay vốn hay chưa.
+      - Nếu chưa có, bổ sung người dùng có chức năng Người đại diện vay vốn vào quy trình duyệt.
+      - Nếu đã có người dùng này, kiểm tra người duyệt đã được ghi nhận trên hệ thống là Người đại diện vay vốn hoặc checker tín dụng hay chưa.
+      - Nếu chưa được ghi nhận, cung cấp Biên bản họp đề nghị vay vốn và yêu cầu MSB cập nhật thông tin trên hệ thống.

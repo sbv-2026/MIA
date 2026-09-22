@@ -1,0 +1,111 @@
+version: '1.0'
+customers:
+  sobv: &sobv_assistant_data
+    todoList:
+    - todolistID: overdue-loan-so-1
+      todotype: overdue-loan
+      dueDate: '2026-09-15'
+      loanAccount: '105010000001'
+      amount: 25000000
+    - todolistID: overdue-loan-so-2
+      todotype: overdue-loan
+      dueDate: '2026-09-15'
+      loanAccount: '105010000002'
+      amount: 50000000
+    - todolistID: overdue-loan-so-3
+      todotype: overdue-loan
+      dueDate: '2026-09-15'
+      loanAccount: '105010000003'
+      amount: 75000000
+    - todolistID: document-debt-so-4
+      todotype: document-debt
+      dueDate: '2026-09-15'
+      business: Giải ngân
+    - todolistID: document-debt-so-5
+      todotype: document-debt
+      dueDate: '2026-09-15'
+      business: Thanh toán T/T từ vốn tự có
+    - todolistID: password-change-so-6
+      todotype: password-change
+      dueDate: '2026-09-25'
+    offeringIds:
+    - business-credit
+  kha: *sobv_assistant_data
+  thanh: *sobv_assistant_data
+  thuy: *sobv_assistant_data
+  cuong: *sobv_assistant_data
+  erik: *sobv_assistant_data
+  huong: *sobv_assistant_data
+  huy: *sobv_assistant_data
+  chi: *sobv_assistant_data
+  tung: *sobv_assistant_data
+  linhnm: *sobv_assistant_data
+  lai: *sobv_assistant_data
+  ly:
+    todoList:
+    - todolistID: document-debt-Ly-1
+      todotype: document-debt
+      dueDate: '2026-09-15'
+      business: Giải ngân
+    offeringIds:
+    - business-credit
+  tanh:
+    todoList:
+    - todolistID: overdue-loan-tanh-1
+      todotype: overdue-loan
+      dueDate: '2026-09-15'
+      loanAccount: '105030000001'
+      amount: 25000000
+    offeringIds: []
+  hoa:
+    todoList:
+    - todolistID: password-change-hoa-1
+      todotype: password-change
+      dueDate: '2026-09-25'
+    offeringIds: []
+  thu:
+    todoList: []
+    offeringIds:
+    - business-credit
+  khoi:
+    todoList: []
+    offeringIds: []
+  minh:
+    todoList:
+    - todolistID: overdue-loan-minh-1
+      todotype: overdue-loan
+      dueDate: '2026-09-15'
+      loanAccount: '105070000001'
+      amount: 25000000
+    - todolistID: overdue-loan-minh-2
+      todotype: overdue-loan
+      dueDate: '2026-09-15'
+      loanAccount: '105070000002'
+      amount: 50000000
+    - todolistID: overdue-loan-minh-3
+      todotype: overdue-loan
+      dueDate: '2026-09-15'
+      loanAccount: '105070000003'
+      amount: 75000000
+    - todolistID: document-debt-minh-4
+      todotype: document-debt
+      dueDate: '2026-09-15'
+      business: Giải ngân
+    - todolistID: document-debt-minh-5
+      todotype: document-debt
+      dueDate: '2026-09-15'
+      business: Thanh toán T/T từ vốn tự có
+    - todolistID: password-change-minh-6
+      todotype: password-change
+      dueDate: '2026-09-25'
+    offeringIds:
+    - business-credit
+  lan:
+    todoList:
+    - todolistID: document-debt-lan-1
+      todotype: document-debt
+      dueDate: '2026-09-15'
+      business: Giải ngân
+    offeringIds:
+    - business-credit
+  khanh: *sobv_assistant_data

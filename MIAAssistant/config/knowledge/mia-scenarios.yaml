@@ -1,0 +1,59 @@
+version: "1.0"
+status: published
+maxSpokenTodoTypes: 2
+templates:
+  greeting: "Xin chào {address}, MIA sẵn sàng hỗ trợ {pronoun} ạ."
+  todos: "{address} ơi, MIA đang thấy {pronoun} có {spokenTodoCount} việc cần làm, đó là {groups}."
+  offering: "{address} ơi. Hiện tại MSB đang có sản phẩm “{productName}”, MIA thấy phù hợp với bên mình ạ. {pronoun} có muốn tìm hiểu thêm không ạ?"
+  error: "MIA phát hiện màn hình đang có mã lỗi {errorCode}. {address} cần MIA hỗ trợ không ạ?"
+  confirm: "{address} muốn truy cập vào “{featureName}”, đúng không ạ?"
+  guideHome: "{address} muốn tìm hướng dẫn sử dụng phần nào ạ?"
+todoTypes:
+  - { todoType: overdue-loan, todoName: khoản vay quá hạn, priority: 30, enabled: true, screenId: credit-information }
+  - { todoType: document-debt, todoName: nợ chứng từ, priority: 20, enabled: true, screenId: documents-management }
+  - { todoType: password-change, todoName: thay đổi mật khẩu, priority: 10, enabled: true, screenId: password-change }
+  - { todoType: approval, todoName: phê duyệt, priority: 30, enabled: true, screenId: domestic-disbursement-create }
+  - { todoType: documents, todoName: bổ sung hồ sơ, priority: 20, enabled: true, screenId: domestic-disbursement-create }
+  - { todoType: payment, todoName: thanh toán, priority: 10, enabled: true, screenId: single-transfer-create }
+offerings:
+  - id: business-credit
+    productName: Chứng chỉ tiền gửi
+    description: Sinh lời mỗi ngày, lợi suất hấp dẫn lên tới 7.5%/năm.
+    details: "Chứng chỉ tiền gửi là giấy tờ có giá do MSB phát hành, có giá trị và được bảo đảm an toàn với mức sinh lời hấp dẫn. Chứng chỉ tiền gửi có thể được mua với số tiền tối thiểu 110 triệu đồng"
+    screenId: certificate-of-deposit
+    priority: 10
+    validFrom: "2026-01-01T00:00:00Z"
+    validUntil: "2027-01-01T00:00:00Z"
+guides:
+  - screenId: letter-of-credit-issue
+    operation: letter-of-credit.issue.edit
+    topic: Phát hành thư tín dụng
+    steps:
+      - Upload file PO để MIA bóc tách dữ liệu.
+      - Bổ sung các trường Thông tin L/C còn thiếu.
+      - Submit yêu cầu cho checker và chờ MSB xử lý hồ sơ.
+  - screenId: domestic-disbursement-create
+    operation: disbursement.domestic.edit
+    topic: Tạo yêu cầu giải ngân
+    steps:
+      - Chọn mục đích thanh toán và loại chuyển tiền.
+      - Nhập thông tin người thụ hưởng, số tiền và nội dung.
+      - Kiểm tra thông tin trước khi chọn Tiếp tục.
+  - screenId: disbursement-dashboard
+    operation: disbursement.dashboard.view
+    topic: Quản lý giải ngân
+    steps:
+      - Xem hạn mức và danh sách yêu cầu giải ngân.
+      - Chọn mục đích thanh toán để mở màn hình tạo yêu cầu.
+  - screenId: single-transfer-create
+    operation: transfer.domestic.edit
+    topic: Chuyển tiền
+    steps:
+      - Nhập người thụ hưởng và số tiền.
+      - Kiểm tra nội dung trước khi tiếp tục.
+  - screenId: term-deposit-create
+    operation: deposit.contract.edit
+    topic: Tiền gửi có kỳ hạn
+    steps:
+      - Chọn kỳ hạn và số tiền gửi.
+      - Kiểm tra thông tin hợp đồng trước khi tiếp tục.

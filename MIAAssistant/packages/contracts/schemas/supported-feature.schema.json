@@ -1,0 +1,52 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "routeId": {
+      "enum": [
+        "home",
+        "transfer",
+        "qr-payment",
+        "disbursement"
+      ],
+      "title": "Routeid",
+      "type": "string"
+    },
+    "screenId": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Screenid",
+      "type": "string"
+    },
+    "name": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "aliases": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Aliases",
+      "type": "array"
+    },
+    "categoryPath": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      }
+    }
+  },
+  "required": [
+    "routeId",
+    "screenId",
+    "name"
+  ],
+  "title": "Feature",
+  "type": "object"
+}

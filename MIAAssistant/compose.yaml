@@ -1,0 +1,52 @@
+services:
+  assistant:
+    build: .
+    image: ghcr.io/miahackathon/mia-assistant:0.1.0
+    ports: ["${MIA_ASSISTANT_PORT:-8090}:8000"]
+    environment:
+      MIA_MODEL_PROVIDER: ${MIA_MODEL_PROVIDER:-external-model}
+      MIA_MODEL_BASE_URL: ${MIA_MODEL_BASE_URL:-}
+      MIA_MODEL_API_KEY: ${MIA_MODEL_API_KEY:-}
+      MIA_MODEL_NAME: ${MIA_MODEL_NAME:-}
+      MIA_MODEL_API_STYLE: ${MIA_MODEL_API_STYLE:-chat-completions}
+      MIA_MODEL_TIMEOUT_SECONDS: ${MIA_MODEL_TIMEOUT_SECONDS:-45}
+      MIA_LC_EXTRACTION_TIMEOUT_SECONDS: ${MIA_LC_EXTRACTION_TIMEOUT_SECONDS:-3}
+      MIA_DEMO_HOST_API_URL: ${MIA_DEMO_HOST_API_URL:-http://host.docker.internal:8081}
+      MIA_GLM_BASE_URL: ${MIA_GLM_BASE_URL:-}
+      MIA_GLM_API_KEY: ${MIA_GLM_API_KEY:-}
+      MIA_GLM_MODEL: ${MIA_GLM_MODEL:-}
+      MIA_GLM_API_STYLE: ${MIA_GLM_API_STYLE:-}
+      MIA_GEMINI_BASE_URL: ${MIA_GEMINI_BASE_URL:-https://generativelanguage.googleapis.com/v1beta/openai/}
+      MIA_GEMINI_API_KEY: ${MIA_GEMINI_API_KEY:-}
+      MIA_GEMINI_MODEL: ${MIA_GEMINI_MODEL:-}
+      MIA_EMOTION_PHRASES: ${MIA_EMOTION_PHRASES:-}
+      MIA_VIENEU_TTS_ENABLED: ${MIA_VIENEU_TTS_ENABLED:-false}
+      VIENEU_API_KEY: ${VIENEU_API_KEY:-}
+      VIENEU_API_BASE_URL: ${VIENEU_API_BASE_URL:-https://api.vieneu.io/api/v1}
+      VIENEU_TTS_URL: ${VIENEU_TTS_URL:-https://api.vieneu.io/api/v1/audio/speech}
+      VIENEU_MODEL: ${VIENEU_MODEL:-vieneu-v4}
+      VIENEU_VOICE: ${VIENEU_VOICE:-Quang Định}
+      VIENEU_VOICE_MALE: ${VIENEU_VOICE_MALE:-Quang Định}
+      VIENEU_VOICE_FEMALE: ${VIENEU_VOICE_FEMALE:-Mai An}
+      MIA_VIENEU_TTS_ALLOWED_ORIGINS: ${MIA_VIENEU_TTS_ALLOWED_ORIGINS:-http://localhost:8081,http://127.0.0.1:8081,http://localhost:5173,http://127.0.0.1:5173}
+      MIA_VIENEU_TTS_CONNECT_TIMEOUT_SECONDS: ${MIA_VIENEU_TTS_CONNECT_TIMEOUT_SECONDS:-10}
+      MIA_VIENEU_TTS_READ_TIMEOUT_SECONDS: ${MIA_VIENEU_TTS_READ_TIMEOUT_SECONDS:-150}
+      MIA_SUPPORT_DB: /app/data/support.sqlite3
+      MIA_SUPPORT_SMTP_HOST: ${MIA_SUPPORT_SMTP_HOST:-}
+      MIA_SUPPORT_SMTP_PORT: ${MIA_SUPPORT_SMTP_PORT:-587}
+      MIA_SUPPORT_SMTP_SECURITY: ${MIA_SUPPORT_SMTP_SECURITY:-starttls}
+      MIA_SUPPORT_SMTP_USER: ${MIA_SUPPORT_SMTP_USER:-}
+      MIA_SUPPORT_SMTP_PASSWORD: ${MIA_SUPPORT_SMTP_PASSWORD:-}
+      MIA_SUPPORT_EMAIL_FROM: ${MIA_SUPPORT_EMAIL_FROM:-}
+      MIA_SUPPORT_EMAIL_TO: ${MIA_SUPPORT_EMAIL_TO:-vips8157@gmail.com}
+      MIA_SUPPORT_ZALO_WEBHOOK_URL: ${MIA_SUPPORT_ZALO_WEBHOOK_URL:-}
+      MIA_SUPPORT_ZALO_TOKEN: ${MIA_SUPPORT_ZALO_TOKEN:-}
+    volumes: ["./config/knowledge:/app/config/knowledge:ro", "support-data:/app/data"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  support-data:

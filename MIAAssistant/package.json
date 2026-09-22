@@ -1,0 +1,17 @@
+{
+  "name": "mia-assistant-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @mia/contracts && npm run build -w @mia/web-context-adapter && npm run build -w @mia/assistant-react-native && npm run build -w @mia/assistant-web",
+    "test": "npm run test -w @mia/contracts && npm run test -w @mia/web-context-adapter && npm run test -w @mia/assistant-web",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

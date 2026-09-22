@@ -1,0 +1,196 @@
+[
+  {
+    "name": "male",
+    "valid": true,
+    "data": {
+      "sessionId": "s1",
+      "recipient": {
+        "address": "anh Minh",
+        "pronoun": "anh"
+      },
+      "todoList": [
+        {
+          "id": "a1",
+          "todoType": "approval"
+        }
+      ],
+      "offeringIds": [
+        "business-credit"
+      ],
+      "capturedAt": "2026-09-16T10:00:00Z"
+    }
+  },
+  {
+    "name": "female",
+    "valid": true,
+    "data": {
+      "sessionId": "s1",
+      "recipient": {
+        "address": "chị Lan",
+        "pronoun": "chị"
+      },
+      "todoList": [
+        {
+          "id": "a1",
+          "todoType": "approval"
+        }
+      ],
+      "offeringIds": [
+        "business-credit"
+      ],
+      "capturedAt": "2026-09-16T10:00:00Z"
+    }
+  },
+  {
+    "name": "fallback",
+    "valid": true,
+    "data": {
+      "sessionId": "s1",
+      "recipient": {
+        "address": "anh/chị",
+        "pronoun": "anh/chị"
+      },
+      "todoList": [
+        {
+          "id": "a1",
+          "todoType": "approval"
+        }
+      ],
+      "offeringIds": [
+        "business-credit"
+      ],
+      "capturedAt": "2026-09-16T10:00:00Z"
+    }
+  },
+  {
+    "name": "fallback-with-name",
+    "valid": false,
+    "data": {
+      "sessionId": "s1",
+      "recipient": {
+        "address": "anh/chị Minh",
+        "pronoun": "anh/chị"
+      },
+      "todoList": [
+        {
+          "id": "a1",
+          "todoType": "approval"
+        }
+      ],
+      "offeringIds": [
+        "business-credit"
+      ],
+      "capturedAt": "2026-09-16T10:00:00Z"
+    }
+  },
+  {
+    "name": "wrong-pronoun",
+    "valid": false,
+    "data": {
+      "sessionId": "s1",
+      "recipient": {
+        "address": "anh Lan",
+        "pronoun": "chị"
+      },
+      "todoList": [
+        {
+          "id": "a1",
+          "todoType": "approval"
+        }
+      ],
+      "offeringIds": [
+        "business-credit"
+      ],
+      "capturedAt": "2026-09-16T10:00:00Z"
+    }
+  },
+  {
+    "name": "duplicate-todo",
+    "valid": false,
+    "data": {
+      "sessionId": "s1",
+      "recipient": {
+        "address": "anh Minh",
+        "pronoun": "anh"
+      },
+      "todoList": [
+        {
+          "id": "a1",
+          "todoType": "approval"
+        },
+        {
+          "id": "a1",
+          "todoType": "documents"
+        }
+      ],
+      "offeringIds": [
+        "business-credit"
+      ],
+      "capturedAt": "2026-09-16T10:00:00Z"
+    }
+  },
+  {
+    "name": "extra-profile",
+    "valid": false,
+    "data": {
+      "sessionId": "s1",
+      "recipient": {
+        "address": "anh Minh",
+        "pronoun": "anh"
+      },
+      "todoList": [
+        {
+          "id": "a1",
+          "todoType": "approval"
+        }
+      ],
+      "offeringIds": [
+        "business-credit"
+      ],
+      "capturedAt": "2026-09-16T10:00:00Z",
+      "username": "minh"
+    }
+  },
+  {
+    "name": "invalid-time",
+    "valid": false,
+    "data": {
+      "sessionId": "s1",
+      "recipient": {
+        "address": "anh Minh",
+        "pronoun": "anh"
+      },
+      "todoList": [
+        {
+          "id": "a1",
+          "todoType": "approval"
+        }
+      ],
+      "offeringIds": [
+        "business-credit"
+      ],
+      "capturedAt": "invalid"
+    }
+  },
+  {
+    "name": "timezone-offset",
+    "valid": true,
+    "data": {
+      "sessionId": "s1",
+      "recipient": {
+        "address": "anh Minh",
+        "pronoun": "anh"
+      },
+      "todoList": [
+        {
+          "id": "a1",
+          "todoType": "approval"
+        }
+      ],
+      "offeringIds": [
+        "business-credit"
+      ],
+      "capturedAt": "2026-09-16T10:00:00+00:00"
+    }
+  }
+]

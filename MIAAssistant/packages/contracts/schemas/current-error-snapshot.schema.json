@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mia.local/contracts/current-error-snapshot.schema.json",
+  "title": "CurrentErrorSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["errorId", "errorCode", "operation", "screenId", "field", "kind", "occurredAt", "observedAt", "source"],
+  "properties": {
+    "errorId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "errorCode": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "operation": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "screenId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "field": { "type": ["string", "null"], "maxLength": 128 },
+    "kind": { "enum": ["inline", "popup", "page", "toast"] },
+    "occurredAt": { "type": "string", "format": "date-time" },
+    "observedAt": { "type": "string", "format": "date-time" },
+    "source": { "enum": ["host-provider", "network-interceptor", "dom-extractor"] }
+  }
+}

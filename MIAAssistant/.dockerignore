@@ -1,0 +1,9 @@
+.git
+node_modules
+**/node_modules
+**/dist
+**/__pycache__
+**/.pytest_cache
+.venv
+**/*.egg-info
+services/agent-api/data

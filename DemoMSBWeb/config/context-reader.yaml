@@ -1,0 +1,40 @@
+version: "1.0"
+mode: host-api
+refreshOn:
+  - assistant-panel-opened
+  - route-changed
+  - transaction-completed
+
+hostApi:
+  contextEndpoint: /api/host/context/{sessionId}
+  errorEndpoint: /api/host/context/{sessionId}/error
+
+domExtractor:
+  sameOriginRequired: true
+  screens:
+    home:
+      routeId: home
+      fields:
+        operation:
+          selector: '[data-agent-field="operation"]'
+          source: textContent
+    domestic-disbursement-create:
+      routeId: disbursement
+      fields:
+        operation:
+          selector: '[data-agent-field="operation"]'
+          source: textContent
+        errorCode:
+          selector: '[data-agent-field="error-code"]'
+          source: data-error-code
+        errorId:
+          selector: '[data-agent-field="error-code"]'
+          source: data-error-id
+
+redaction:
+  deniedFields:
+    - accountNumber
+    - accessToken
+    - authorization
+    - apiKey
+    - password
